@@ -54,6 +54,8 @@ def remove_cart_item(request,product_id):
     return redirect('cart')
 
 def cart(request, total=0, quantity=0, cart_items=None):
+    delivery_price = 0  # initialize with default value
+    grand_total = 0
     try:
         cart = Cart.objects.get(cart_id=_cart_id(request))
         cart_items = CartItem.objects.filter(cart=cart, is_active=True)
@@ -69,8 +71,8 @@ def cart(request, total=0, quantity=0, cart_items=None):
         'total': total,
         'quantity': quantity,
         'cart_items': cart_items,
-        'delivery_price':delivery_price,
-        'grand_total':grand_total,
+        'delivery_price': delivery_price,
+        'grand_total': grand_total,
     }
 
     return render(request, 'store/cart.html', context)
